@@ -2,7 +2,15 @@
   "mcpServers": {
     "vibie-data": {
       "type": "http",
-      "url": "https://mcp.vibie.live/mcp"
+      "url": "https://mcp.vibie.live/mcp",
+      "auth": "oauth",
+      "scopes": [
+        "vibie.data.read",
+        "openid",
+        "email",
+        "profile",
+        "offline_access"
+      ]
     }
   }
 }

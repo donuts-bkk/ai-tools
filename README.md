@@ -14,11 +14,11 @@ codex plugin marketplace add /absolute/path/to/vibie-data-plugin
 
 Then open the Codex app, choose **Plugins**, select **Vibie Team**, and install **Vibie Data**. Authentication happens during installation through Auth0 and accepts authorized `@donuts-bkk.com` accounts.
 
-For a CLI smoke test:
+For a CLI smoke test (the configured scopes are requested automatically):
 
 ```bash
 codex plugin add vibie-data@personal
-codex mcp login vibie-data --oauth-client-registration dcr --scopes vibie.data.read,openid,email,profile,offline_access
+codex mcp login vibie-data --oauth-client-registration dcr
 ```
 
 The login command opens Auth0 in the browser. Sign in with an authorized, verified
@@ -38,15 +38,17 @@ Auth0 DCR is open client registration. Keep the default API grant limited to the
 
 ## Team distribution
 
-Host this repository in the company GitHub organization, then team members can add the marketplace once:
+The source is hosted in the private company GitLab. An administrator or developer can add the marketplace once:
 
 ```bash
-codex plugin marketplace add vibe2/vibie-data-plugin
-codex plugin add vibie-data@personal
-codex mcp login vibie-data --oauth-client-registration dcr --scopes vibie.data.read,openid,email,profile,offline_access
+codex plugin marketplace add git@gitlab.vibie.live:vibie/vibie-data-plugin.git
 ```
 
-To remove the per-machine marketplace command entirely, a ChatGPT workspace admin can publish the tested local plugin to selected workspace roles from the Plugins management page. Workspace members can then install it directly from the Codex/ChatGPT Plugins Directory.
+Restart the ChatGPT desktop app, open **Plugins**, choose **Vibie Team**, and click
+**Install**. The **Connect** flow opens Auth0 and automatically requests
+`vibie.data.read`, `openid`, `email`, `profile`, and `offline_access`.
+
+To remove the per-machine marketplace command entirely, a ChatGPT workspace admin can publish the tested local plugin to selected workspace roles from the Plugins management page. Workspace members can then install and connect it directly from the Codex/ChatGPT Plugins Directory without GitLab access or CLI commands.
 
 ## Security
 

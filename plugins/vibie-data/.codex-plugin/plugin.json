@@ -1,13 +1,13 @@
 {
   "name": "vibie-data",
-  "version": "0.1.0+codex.20260826073318",
+  "version": "0.1.0+codex.20260826083517",
   "description": "Answer team business questions from verified, read-only Vibie production data.",
   "author": {
     "name": "Donuts Bangkok Co., Ltd.",
     "url": "https://vibie.live"
   },
   "homepage": "https://mcp.vibie.live/docs",
-  "repository": "https://github.com/vibe2/vibie-data-plugin",
+  "repository": "https://gitlab.vibie.live/vibie/vibie-data-plugin",
   "keywords": [
     "vibie",
     "analytics",
