@@ -38,17 +38,37 @@ Auth0 DCR is open client registration. Keep the default API grant limited to the
 
 ## Team distribution
 
-The source is hosted in the private company GitLab. An administrator or developer can add the marketplace once:
+The source is hosted in the private company GitLab. Each team member adds the marketplace once:
 
 ```bash
 codex plugin marketplace add git@gitlab.vibie.live:vibie/vibie-data-plugin.git
 ```
 
-Restart the ChatGPT desktop app, open **Plugins**, choose **Vibie Team**, and click
-**Install**. The **Connect** flow opens Auth0 and automatically requests
-`vibie.data.read`, `openid`, `email`, `profile`, and `offline_access`.
+This command is the only initial CLI step. It works in macOS Terminal and Windows
+PowerShell after the employee has GitLab access and Git/SSH authentication configured.
 
-To remove the per-machine marketplace command entirely, a ChatGPT workspace admin can publish the tested local plugin to selected workspace roles from the Plugins management page. Workspace members can then install and connect it directly from the Codex/ChatGPT Plugins Directory without GitLab access or CLI commands.
+Restart the ChatGPT desktop app, open **Plugins**, choose **Vibie Team**, and click
+**Install**. Click **Connect** when prompted. The Auth0 flow automatically requests
+`vibie.data.read`, `openid`, `email`, `profile`, and `offline_access`; sign in with an
+authorized, verified `@donuts-bkk.com` Google Workspace account.
+
+### Updating an existing installation
+
+When a new plugin version is available, refresh the Git-backed marketplace:
+
+```bash
+codex plugin marketplace upgrade personal
+```
+
+Then restart the desktop app, open **Plugins → Vibie Team → Vibie Data**, and use the
+GUI update action shown for the new version. Start a new task after updating so Codex
+loads the new skill and MCP configuration.
+
+To verify which marketplace sources are configured, run:
+
+```bash
+codex plugin marketplace list
+```
 
 ## Security
 
