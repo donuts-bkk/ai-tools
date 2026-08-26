@@ -18,9 +18,12 @@ For a CLI smoke test:
 
 ```bash
 codex plugin add vibie-data@personal
+codex mcp login vibie-data --oauth-client-registration dcr --scopes vibie.data.read,openid,email,profile,offline_access
 ```
 
-Restart Codex and start a new task after installing or updating the plugin.
+The login command opens Auth0 in the browser. Sign in with an authorized, verified
+`@donuts-bkk.com` Google Workspace account. Restart Codex and start a new task after
+installing, logging in, or updating the plugin.
 
 ## Auth0 prerequisites
 
@@ -39,6 +42,8 @@ Host this repository in the company GitHub organization, then team members can a
 
 ```bash
 codex plugin marketplace add vibe2/vibie-data-plugin
+codex plugin add vibie-data@personal
+codex mcp login vibie-data --oauth-client-registration dcr --scopes vibie.data.read,openid,email,profile,offline_access
 ```
 
 To remove the per-machine marketplace command entirely, a ChatGPT workspace admin can publish the tested local plugin to selected workspace roles from the Plugins management page. Workspace members can then install it directly from the Codex/ChatGPT Plugins Directory.
