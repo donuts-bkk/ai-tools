@@ -1,0 +1,35 @@
+{
+  "name": "vibie-data",
+  "version": "0.1.0",
+  "description": "Answer team business questions from verified, read-only Vibie production data.",
+  "author": {
+    "name": "Donuts Bangkok Co., Ltd.",
+    "url": "https://vibie.live"
+  },
+  "homepage": "https://mcp.vibie.live/docs",
+  "repository": "https://github.com/vibe2/vibie-data-plugin",
+  "keywords": [
+    "vibie",
+    "analytics",
+    "business-intelligence",
+    "postgresql"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Vibie Data",
+    "shortDescription": "Ask verified questions about Vibie data",
+    "longDescription": "Query and explain Vibie production metrics through an OAuth-protected, read-only MCP server. Built for authorized Donuts Bangkok team members.",
+    "developerName": "Donuts Bangkok Co., Ltd.",
+    "category": "Productivity",
+    "capabilities": [
+      "Read"
+    ],
+    "websiteURL": "https://mcp.vibie.live/docs",
+    "defaultPrompt": [
+      "วันนี้ Vibie มี active users เท่าไร เทียบกับ 7 วันก่อน",
+      "สรุปรายได้และจำนวนผู้จ่ายเงินของเดือนนี้",
+      "VB คนไหนไลฟ์มากที่สุดใน 7 วันล่าสุด"
+    ]
+  },
+  "mcpServers": "./.mcp.json"
+}

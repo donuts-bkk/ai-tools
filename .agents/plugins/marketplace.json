@@ -1,0 +1,20 @@
+{
+  "name": "personal",
+  "interface": {
+    "displayName": "Vibie Team"
+  },
+  "plugins": [
+    {
+      "name": "vibie-data",
+      "source": {
+        "source": "local",
+        "path": "./plugins/vibie-data"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

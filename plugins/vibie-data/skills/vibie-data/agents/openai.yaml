@@ -1,0 +1,4 @@
+interface:
+  display_name: "Vibie Data"
+  short_description: "Answer team questions from verified Vibie data"
+  default_prompt: "Use Vibie Data to answer this question with verified read-only evidence."
