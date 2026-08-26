@@ -27,6 +27,12 @@ installing, logging in, or updating the plugin.
 
 ## Auth0 prerequisites
 
+The production source of truth is the MCP repository's
+`docs/AUTH0-RUNBOOK.md`. It contains the verified tenant, audience, claims,
+Post Login Action reference, user lifecycle, change procedure, troubleshooting,
+incident response, and rollback checklist. Do not copy Auth0 credentials or tokens
+into this repository.
+
 Codex registers an OAuth client for the installed MCP connection. Configure the Auth0 tenant in this order before testing login:
 
 1. Open the `Vibie Data MCP` API and authorize `vibie.data.read` under **Default Permissions for Third Party Apps → User-Delegated Access**.
