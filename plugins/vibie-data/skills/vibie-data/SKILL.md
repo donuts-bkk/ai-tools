@@ -9,6 +9,15 @@ Answer Thai or English business questions with verified evidence from the bundle
 
 VB means VJ, caster, or streamer: a person who broadcasts live in the Vibie app. Treat these terms as equivalent unless the user defines a narrower meaning.
 
+## Capability map
+
+- Users and activity: total/new users, DAU/MAU, segments, counts, and trends.
+- Streaming: active VB/VJ/casters, lives, completed duration, modes, and rankings.
+- Monetization: payments, gross top-up revenue, paying users, channels, coin, candy, stickers, and gifting.
+- Ecosystem: PK, agencies/affiliations, contracts and rewards, campaigns/events, and metric-based rankings.
+
+This map is not a fixed schema. For an unfamiliar or ambiguous request, call `get_business_context` with `capabilities` and the relevant domain topics. Use live schema tools before SQL.
+
 ## Safety
 
 - Use only the bundled MCP tools. Never connect to PostgreSQL directly or ask the user for a database URL, password, token, or other secret.
@@ -19,7 +28,7 @@ VB means VJ, caster, or streamer: a person who broadcasts live in the Vibie app.
 
 ## Workflow
 
-1. Call `get_business_context` for relevant terminology or metric definitions before constructing a query.
+1. Call `get_business_context` for the relevant domain topics before constructing a query. Include `capabilities` when the requested analysis does not clearly match the capability map.
 2. Use `search_schema` and `describe_table` to verify every table and column not already confirmed in the current conversation. Never invent identifiers.
 3. Resolve an ambiguous metric with one concise question only when different definitions would materially change the answer.
 4. Use Bangkok business time (`Asia/Bangkok`). State the exact date range and make time boundaries explicit in SQL.
