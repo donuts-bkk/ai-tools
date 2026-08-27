@@ -1,8 +1,8 @@
 # Vibie Data Plugin
 
-Public Codex plugin for authorized Donuts Bangkok team members. It bundles the Vibie business-data skill with the OAuth-protected, read-only MCP server at `https://mcp.vibie.live/mcp`.
+Public Codex and Claude Code plugin for authorized Donuts Bangkok team members. It bundles the Vibie business-data skill with the OAuth-protected, read-only MCP server at `https://mcp.vibie.live/mcp`.
 
-The repository is only a distribution package for Codex. It contains no database credential, native binary, PostgreSQL client, or backend source code. Making this repository public does not make Vibie data public: the MCP server still requires Auth0 login with an authorized company account and the `vibie.data.read` scope.
+The repository is only a distribution package for AI clients. It contains no database credential, native binary, PostgreSQL client, or backend source code. Making this repository public does not make Vibie data public: the MCP server still requires Auth0 login with an authorized company account and the `vibie.data.read` scope.
 
 ## Install in Codex
 
@@ -31,7 +31,48 @@ codex mcp login vibie-data --oauth-client-registration dcr
 
 `personal` is the marketplace's technical identifier; its display name in the GUI is **Vibie Team**.
 
-## Update an existing installation
+## Install in Claude Code
+
+Claude Code uses its own marketplace manifest from the same Git repository. Run these commands in Claude Code:
+
+```text
+/plugin marketplace add https://gitlab.vibie.live/ai-tools/vibie-data-plugin.git
+/plugin install vibie-data@ai-tools
+/reload-plugins
+```
+
+Then run `/mcp`, select the Vibie Data server, and complete the OAuth login with an authorized, verified `@donuts-bkk.com` Google Workspace account. The plugin loads the same business-language skill as Codex and requests only `vibie.data.read`, OpenID profile scopes, and refresh-token access.
+
+The equivalent terminal commands are:
+
+```bash
+claude plugin marketplace add https://gitlab.vibie.live/ai-tools/vibie-data-plugin.git
+claude plugin install vibie-data@ai-tools
+```
+
+### Update in Claude Code
+
+```text
+/plugin marketplace update ai-tools
+/plugin update vibie-data@ai-tools
+/reload-plugins
+```
+
+Claude Code uses the semantic version in `.claude-plugin/plugin.json`. Maintainers must bump it for every Claude-facing release.
+
+## Use in Claude or Claude Desktop
+
+Claude and Claude Desktop can use the hosted MCP server directly without installing the Git marketplace:
+
+1. Open **Settings → Connectors**.
+2. Choose **Add custom connector**.
+3. Enter `Vibie Data` as the name and `https://mcp.vibie.live/mcp` as the connector URL.
+4. Click **Connect** and complete the company Auth0 login.
+5. Enable the Vibie Data tools from **Search and tools** in a conversation.
+
+The Git plugin's skill instructions are available in Claude Code. Claude and Claude Desktop receive the MCP tools, their safety descriptions, and live business context from the server itself.
+
+## Update an existing Codex installation
 
 Refresh the Git-backed marketplace:
 
@@ -49,13 +90,13 @@ codex plugin marketplace list
 
 ## Maintainer workflow
 
-1. Update the plugin files under `plugins/vibie-data`.
-2. Bump the plugin version in `plugins/vibie-data/.codex-plugin/plugin.json`.
-3. Validate and test the plugin locally.
+1. Update the shared skill or client manifests under `plugins/vibie-data`.
+2. Bump the Codex cachebuster and the Claude semantic version in their respective `plugin.json` files.
+3. Validate and test both the Codex and Claude packages locally.
 4. Commit and push to the default branch.
 5. Team members run the marketplace upgrade command and update through the GUI.
 
-This Git marketplace is separate from the Universal Plugins Directory. Publishing a new Git revision does not require submitting the plugin to OpenAI for review.
+These Git marketplaces are separate from the OpenAI and Anthropic public directories. Publishing a new Git revision for direct team installation does not require submitting the plugin to either company for review.
 
 ## Authentication operations
 
@@ -63,7 +104,7 @@ The production Auth0 configuration, change procedure, incident response, and rol
 
 ## Security boundary
 
-- The public repository contains only plugin metadata, MCP endpoint configuration, and business-language guidance.
+- The public repository contains only Codex/Claude plugin metadata, MCP endpoint configuration, and business-language guidance.
 - MCP access requires OAuth, an authorized verified company identity, and the `vibie.data.read` scope.
 - The MCP server independently enforces read-only SQL, bounded results, Bangkok timezone handling, and PII restrictions.
 - Database credentials remain only on the server and are never installed on employee machines.

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "ai-tools",
+  "owner": {
+    "name": "Donuts Bangkok Co., Ltd.",
+    "url": "https://vibie.live"
+  },
+  "description": "Shared AI tools and data integrations for the Donuts Bangkok team.",
+  "plugins": [
+    {
+      "name": "vibie-data",
+      "displayName": "Vibie Data",
+      "source": "./plugins/vibie-data",
+      "description": "Query verified, read-only Vibie production data through an OAuth-protected MCP server.",
+      "category": "Productivity",
+      "tags": [
+        "analytics",
+        "business-intelligence",
+        "mcp",
+        "vibie"
+      ]
+    }
+  ]
+}

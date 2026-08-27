@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "vibie-data": {
+      "type": "http",
+      "url": "https://mcp.vibie.live/mcp",
+      "oauth": {
+        "scopes": "vibie.data.read openid email profile offline_access"
+      }
+    }
+  }
+}
