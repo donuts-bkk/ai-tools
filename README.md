@@ -9,7 +9,7 @@ The repository is only a distribution package for Codex. It contains no database
 Each team member adds the public marketplace once. Run this command in macOS Terminal or Windows PowerShell:
 
 ```bash
-codex plugin marketplace add https://gitlab.vibie.live/vibie/vibie-data-plugin.git
+codex plugin marketplace add https://gitlab.vibie.live/ai-tools/vibie-data-plugin.git
 ```
 
 No GitLab account or SSH key is required. Then:
