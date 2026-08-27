@@ -1,6 +1,6 @@
 {
   "name": "vibie-data",
-  "version": "0.1.0+codex.20260827064945",
+  "version": "0.1.0+codex.20260827082726",
   "description": "Answer team business questions from verified, read-only Vibie production data.",
   "author": {
     "name": "Donuts Bangkok Co., Ltd.",
@@ -31,5 +31,6 @@
       "VB คนไหนไลฟ์มากที่สุดใน 7 วันล่าสุด"
     ]
   },
-  "mcpServers": "./.mcp.json"
+  "mcpServers": "./.mcp.json",
+  "apps": "./.app.json"
 }

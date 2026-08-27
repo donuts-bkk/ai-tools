@@ -2,6 +2,12 @@
 
 Private Codex/ChatGPT plugin for authorized Donuts Bangkok team members. It bundles a Vibie business-data skill with the OAuth-protected, read-only MCP server at `https://mcp.vibie.live/mcp`.
 
+The plugin includes both connection paths required by the supported clients:
+
+- `.mcp.json` configures the hosted MCP server for Codex.
+- `.app.json` maps the plugin to the ChatGPT developer-mode connection so the
+  ChatGPT composer receives the Vibie Data tools instead of loading only the skill.
+
 No database credential, native binary, PostgreSQL client, or backend repository is installed on employee machines.
 
 ## Local installation test
@@ -57,6 +63,10 @@ Restart the ChatGPT desktop app, open **Plugins**, choose **Vibie Team**, and cl
 **Install**. Click **Connect** when prompted. The Auth0 flow automatically requests
 `vibie.data.read`, `openid`, `email`, `profile`, and `offline_access`; sign in with an
 authorized, verified `@donuts-bkk.com` Google Workspace account.
+
+This flow works with eligible personal ChatGPT accounts; a ChatGPT Business workspace
+is not required. Each employee authorizes the shared Vibie Data connection against
+their own ChatGPT account and company Google identity.
 
 ### Updating an existing installation
 
