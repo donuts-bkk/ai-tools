@@ -6,9 +6,6 @@
       "auth": "oauth",
       "scopes": [
         "vibie.data.read",
-        "openid",
-        "email",
-        "profile",
         "offline_access"
       ]
     }

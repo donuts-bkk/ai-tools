@@ -20,7 +20,11 @@ No GitLab account or SSH key is required. Then:
 4. Complete the Auth0 login with an authorized, verified `@donuts-bkk.com` Google Workspace account.
 5. Start a new task and ask a Vibie business-data question.
 
-Codex reads `.mcp.json` from the plugin and automatically requests `vibie.data.read`, `openid`, `email`, `profile`, and `offline_access`. A ChatGPT connector, ChatGPT developer-mode app, ChatGPT Business workspace, and OpenAI plugin-directory review are not part of this installation path.
+Codex reads `.mcp.json` from the plugin and requests `vibie.data.read` and
+`offline_access`. The MCP OAuth broker handles Auth0's OpenID scopes internally, so each
+installation does not create a new Auth0 Application. A ChatGPT connector, ChatGPT
+developer-mode app, ChatGPT Business workspace, and OpenAI plugin-directory review are not
+part of this installation path.
 
 For a CLI smoke test:
 
@@ -41,7 +45,7 @@ Claude Code uses its own marketplace manifest from the same Git repository. Run 
 /reload-plugins
 ```
 
-Then run `/mcp`, select the Vibie Data server, and complete the OAuth login with an authorized, verified `@donuts-bkk.com` Google Workspace account. The plugin loads the same business-language skill as Codex and requests only `vibie.data.read`, OpenID profile scopes, and refresh-token access.
+Then run `/mcp`, select the Vibie Data server, and complete the OAuth login with an authorized, verified `@donuts-bkk.com` Google Workspace account. The plugin loads the same business-language skill as Codex and requests only `vibie.data.read` and refresh-token access.
 
 The equivalent terminal commands are:
 
