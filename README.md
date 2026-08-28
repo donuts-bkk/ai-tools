@@ -35,7 +35,22 @@ codex mcp login vibie-data --oauth-client-registration dcr
 
 `personal` is the marketplace's technical identifier; its display name in the GUI is **Vibie Team**.
 
-## Install in Claude Code
+## Install in Claude by uploading a ZIP (recommended)
+
+The self-hosted GitLab domain is not accepted by every Claude marketplace UI. Use the release ZIP
+instead; it contains only the Claude manifest, hosted MCP configuration, and Vibie Data skill.
+
+1. Download the latest `vibie-data-<version>.zip` from the maintainer.
+2. In Claude, open **Customize → Plugins → Add plugin → Upload a plugin**.
+3. Select the ZIP and click **Upload**.
+4. Open the plugin's MCP connection and click **Authenticate**.
+5. Sign in with an authorized, verified `@donuts-bkk.com` Google Workspace account.
+
+The ZIP is installed locally on that Claude Desktop/Cowork installation. To update it, upload a
+new ZIP whose manifest has the same plugin name and a newer version; Claude replaces the existing
+manual plugin. No GitLab access is required on the employee's machine.
+
+## Install in Claude Code from Git (CLI alternative)
 
 Claude Code uses its own marketplace manifest from the same Git repository. Run these commands in Claude Code:
 
@@ -97,8 +112,13 @@ codex plugin marketplace list
 1. Update the shared skill or client manifests under `plugins/vibie-data`.
 2. Bump the Codex cachebuster and the Claude semantic version in their respective `plugin.json` files.
 3. Validate and test both the Codex and Claude packages locally.
-4. Commit and push to the default branch.
-5. Team members run the marketplace upgrade command and update through the GUI.
+4. Build the Claude upload artifact with `./scripts/build-claude-upload.sh`.
+5. Commit and push source changes to the default branch. Do not commit `dist/` archives.
+6. Distribute `dist/vibie-data-<version>.zip` through an approved internal channel. Users upload the
+   new ZIP to replace their existing manual installation.
+
+The archive must keep `.claude-plugin/plugin.json` at the ZIP root and remain below Anthropic's
+50 MB upload limit. The build script validates both conditions.
 
 These Git marketplaces are separate from the OpenAI and Anthropic public directories. Publishing a new Git revision for direct team installation does not require submitting the plugin to either company for review.
 

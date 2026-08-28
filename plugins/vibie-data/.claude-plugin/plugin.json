@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "vibie-data",
   "displayName": "Vibie Data",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Query and explain verified, read-only Vibie production data.",
   "author": {
     "name": "Donuts Bangkok Co., Ltd.",
