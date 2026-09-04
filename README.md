@@ -1,6 +1,8 @@
 # Vibie Data Plugin
 
-Public Codex and Claude Code plugin for authorized Donuts Bangkok team members. It bundles the Vibie business-data skill with the OAuth-protected, read-only MCP server at `https://mcp.vibie.live/mcp`.
+Public Codex and Claude Code marketplace for authorized Donuts Bangkok team members. One marketplace
+can contain multiple project plugins; it currently bundles Vibie Data with the OAuth-protected,
+read-only MCP server at `https://mcp.vibie.live/mcp`.
 
 The repository is only a distribution package for AI clients. It contains no database credential, native binary, PostgreSQL client, or backend source code. Making this repository public does not make Vibie data public: the MCP server still requires Auth0 login with an authorized company account and the `vibie.data.read` scope.
 
@@ -9,7 +11,7 @@ The repository is only a distribution package for AI clients. It contains no dat
 Each team member adds the public marketplace once. Run this command in macOS Terminal or Windows PowerShell:
 
 ```bash
-codex plugin marketplace add https://gitlab.vibie.live/ai-tools/vibie-data-plugin.git
+codex plugin marketplace add https://gitlab.com/apirakm/ai-tools.git
 ```
 
 No GitLab account or SSH key is required. Then:
@@ -35,10 +37,25 @@ codex mcp login vibie-data --oauth-client-registration dcr
 
 `personal` is the marketplace's technical identifier; its display name in the GUI is **Vibie Team**.
 
-## Install in Claude by uploading a ZIP (recommended)
+## Install in Claude from GitLab.com (recommended)
 
-The self-hosted GitLab domain is not accepted by every Claude marketplace UI. Use the release ZIP
-instead; it contains only the Claude manifest, hosted MCP configuration, and Vibie Data skill.
+Claude accepts a public `gitlab.com` repository even though it rejects the self-hosted
+`gitlab.vibie.live` domain in the marketplace UI. Add this marketplace once:
+
+```text
+/plugin marketplace add https://gitlab.com/apirakm/ai-tools.git
+/plugin install vibie-data@ai-tools
+/reload-plugins
+```
+
+Then run `/mcp`, select Vibie Data, and authenticate with an authorized, verified
+`@donuts-bkk.com` Google Workspace account. Future releases use marketplace update/install flows
+instead of sending a new ZIP to every employee.
+
+## Install in Claude by uploading a ZIP (fallback)
+
+Use the release ZIP only when GitLab.com is unavailable or organization policy disables external
+marketplaces. It contains only the Claude manifest, hosted MCP configuration, and Vibie Data skill.
 
 1. Download the latest `vibie-data-<version>.zip` from the maintainer.
 2. In Claude, open **Customize → Plugins → Add plugin → Upload a plugin**.
@@ -50,12 +67,12 @@ The ZIP is installed locally on that Claude Desktop/Cowork installation. To upda
 new ZIP whose manifest has the same plugin name and a newer version; Claude replaces the existing
 manual plugin. No GitLab access is required on the employee's machine.
 
-## Install in Claude Code from Git (CLI alternative)
+## Install in Claude Code from Git (terminal alternative)
 
 Claude Code uses its own marketplace manifest from the same Git repository. Run these commands in Claude Code:
 
 ```text
-/plugin marketplace add https://gitlab.vibie.live/ai-tools/vibie-data-plugin.git
+/plugin marketplace add https://gitlab.com/apirakm/ai-tools.git
 /plugin install vibie-data@ai-tools
 /reload-plugins
 ```
@@ -65,7 +82,7 @@ Then run `/mcp`, select the Vibie Data server, and complete the OAuth login with
 The equivalent terminal commands are:
 
 ```bash
-claude plugin marketplace add https://gitlab.vibie.live/ai-tools/vibie-data-plugin.git
+claude plugin marketplace add https://gitlab.com/apirakm/ai-tools.git
 claude plugin install vibie-data@ai-tools
 ```
 
@@ -112,10 +129,11 @@ codex plugin marketplace list
 1. Update the shared skill or client manifests under `plugins/vibie-data`.
 2. Bump the Codex cachebuster and the Claude semantic version in their respective `plugin.json` files.
 3. Validate and test both the Codex and Claude packages locally.
-4. Build the Claude upload artifact with `./scripts/build-claude-upload.sh`.
-5. Commit and push source changes to the default branch. Do not commit `dist/` archives.
-6. Distribute `dist/vibie-data-<version>.zip` through an approved internal channel. Users upload the
-   new ZIP to replace their existing manual installation.
+4. Build the Claude upload fallback with `./scripts/build-claude-upload.sh`.
+5. Commit and push source changes to both `origin` and the public `gitlab.com` mirror. Do not commit
+   `dist/` archives.
+6. Team members update through the marketplace. Distribute `dist/vibie-data-<version>.zip` only as
+   a fallback through an approved internal channel.
 
 The archive must keep `.claude-plugin/plugin.json` at the ZIP root and remain below Anthropic's
 50 MB upload limit. The build script validates both conditions.
