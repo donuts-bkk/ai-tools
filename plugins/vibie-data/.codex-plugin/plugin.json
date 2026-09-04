@@ -1,6 +1,6 @@
 {
   "name": "vibie-data",
-  "version": "0.1.0+codex.20260904120122",
+  "version": "0.1.0+codex.20260904121221",
   "description": "Answer team business questions from verified, read-only Vibie production data.",
   "author": {
     "name": "Donuts Bangkok Co., Ltd.",
@@ -15,7 +15,6 @@
     "postgresql"
   ],
   "skills": "./skills/",
-  "apps": "./.app.json",
   "interface": {
     "displayName": "Vibie Data",
     "shortDescription": "Ask verified questions about Vibie data",
