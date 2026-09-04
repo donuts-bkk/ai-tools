@@ -14,7 +14,7 @@ Each team member adds the public marketplace once. Run this command in macOS Ter
 codex plugin marketplace add https://github.com/donuts-bkk/ai-tools.git
 ```
 
-No GitLab account or SSH key is required. Then:
+No GitHub account or SSH key is required. Then:
 
 1. Restart Codex.
 2. Open **Settings → Plugins**.
@@ -48,23 +48,8 @@ GitHub is the canonical public marketplace host for both Claude and Codex. Add t
 ```
 
 Then run `/mcp`, select Vibie Data, and authenticate with an authorized, verified
-`@donuts-bkk.com` Google Workspace account. Future releases use marketplace update/install flows
-instead of sending a new ZIP to every employee.
-
-## Install in Claude by uploading a ZIP (fallback)
-
-Use the release ZIP only when GitHub is unavailable or organization policy disables external
-marketplaces. It contains only the Claude manifest, hosted MCP configuration, and Vibie Data skill.
-
-1. Download the latest `vibie-data-<version>.zip` from the maintainer.
-2. In Claude, open **Customize → Plugins → Add plugin → Upload a plugin**.
-3. Select the ZIP and click **Upload**.
-4. Open the plugin's MCP connection and click **Authenticate**.
-5. Sign in with an authorized, verified `@donuts-bkk.com` Google Workspace account.
-
-The ZIP is installed locally on that Claude Desktop/Cowork installation. To update it, upload a
-new ZIP whose manifest has the same plugin name and a newer version; Claude replaces the existing
-manual plugin. No GitLab access is required on the employee's machine.
+`@donuts-bkk.com` Google Workspace account. Future releases are distributed only through GitHub
+marketplace update/install flows.
 
 ## Install in Claude Code from Git (terminal alternative)
 
@@ -129,18 +114,12 @@ codex plugin marketplace list
    `plugins/vibie-data-claude`. Keep their skill instructions aligned.
 2. Bump the Codex cachebuster and the Claude semantic version in their respective `plugin.json` files.
 3. Validate and test both the Codex and Claude packages locally.
-4. Build the Claude upload fallback with `./scripts/build-claude-upload.sh`.
-5. Commit and push source changes to `origin` and the public GitHub mirror. Keep the legacy public
-   GitLab.com mirror updated during the migration period. Do not commit `dist/` archives.
-6. Team members update through the marketplace. Distribute `dist/vibie-data-<version>.zip` only as
-   a fallback through an approved internal channel.
+4. Commit and push source changes to the public GitHub repository.
+5. Team members install and update only through the Git marketplace.
 
 Codex and Claude use separate package directories because their MCP OAuth configuration schemas
 differ. Do not put both client MCP files in one plugin directory: Claude's remote marketplace
 validator rejects conflicting declarations for the same MCP server name.
-
-The archive must keep `.claude-plugin/plugin.json` at the ZIP root and remain below Anthropic's
-50 MB upload limit. The build script validates both conditions.
 
 These Git marketplaces are separate from the OpenAI and Anthropic public directories. Publishing a new Git revision for direct team installation does not require submitting the plugin to either company for review.
 
