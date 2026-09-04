@@ -2,14 +2,14 @@
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "vibie-data",
   "displayName": "Vibie Data",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Query and explain verified, read-only Vibie production data.",
   "author": {
     "name": "Donuts Bangkok Co., Ltd.",
     "url": "https://vibie.live"
   },
   "homepage": "https://mcp.vibie.live/docs",
-  "repository": "https://gitlab.com/apirakm/ai-tools",
+  "repository": "https://github.com/donuts-bkk/ai-tools",
   "keywords": [
     "vibie",
     "analytics",

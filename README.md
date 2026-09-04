@@ -11,7 +11,7 @@ The repository is only a distribution package for AI clients. It contains no dat
 Each team member adds the public marketplace once. Run this command in macOS Terminal or Windows PowerShell:
 
 ```bash
-codex plugin marketplace add https://gitlab.com/apirakm/ai-tools.git
+codex plugin marketplace add https://github.com/donuts-bkk/ai-tools.git
 ```
 
 No GitLab account or SSH key is required. Then:
@@ -37,13 +37,12 @@ codex mcp login vibie-data --oauth-client-registration dcr
 
 `personal` is the marketplace's technical identifier; its display name in the GUI is **Vibie Team**.
 
-## Install in Claude from GitLab.com (recommended)
+## Install in Claude from GitHub (recommended)
 
-Claude accepts a public `gitlab.com` repository even though it rejects the self-hosted
-`gitlab.vibie.live` domain in the marketplace UI. Add this marketplace once:
+GitHub is the canonical public marketplace host for both Claude and Codex. Add this marketplace once:
 
 ```text
-/plugin marketplace add https://gitlab.com/apirakm/ai-tools.git
+/plugin marketplace add https://github.com/donuts-bkk/ai-tools.git
 /plugin install vibie-data@ai-tools
 /reload-plugins
 ```
@@ -54,7 +53,7 @@ instead of sending a new ZIP to every employee.
 
 ## Install in Claude by uploading a ZIP (fallback)
 
-Use the release ZIP only when GitLab.com is unavailable or organization policy disables external
+Use the release ZIP only when GitHub is unavailable or organization policy disables external
 marketplaces. It contains only the Claude manifest, hosted MCP configuration, and Vibie Data skill.
 
 1. Download the latest `vibie-data-<version>.zip` from the maintainer.
@@ -72,7 +71,7 @@ manual plugin. No GitLab access is required on the employee's machine.
 Claude Code uses its own marketplace manifest from the same Git repository. Run these commands in Claude Code:
 
 ```text
-/plugin marketplace add https://gitlab.com/apirakm/ai-tools.git
+/plugin marketplace add https://github.com/donuts-bkk/ai-tools.git
 /plugin install vibie-data@ai-tools
 /reload-plugins
 ```
@@ -82,7 +81,7 @@ Then run `/mcp`, select the Vibie Data server, and complete the OAuth login with
 The equivalent terminal commands are:
 
 ```bash
-claude plugin marketplace add https://gitlab.com/apirakm/ai-tools.git
+claude plugin marketplace add https://github.com/donuts-bkk/ai-tools.git
 claude plugin install vibie-data@ai-tools
 ```
 
@@ -131,8 +130,8 @@ codex plugin marketplace list
 2. Bump the Codex cachebuster and the Claude semantic version in their respective `plugin.json` files.
 3. Validate and test both the Codex and Claude packages locally.
 4. Build the Claude upload fallback with `./scripts/build-claude-upload.sh`.
-5. Commit and push source changes to both `origin` and the public `gitlab.com` mirror. Do not commit
-   `dist/` archives.
+5. Commit and push source changes to `origin` and the public GitHub mirror. Keep the legacy public
+   GitLab.com mirror updated during the migration period. Do not commit `dist/` archives.
 6. Team members update through the marketplace. Distribute `dist/vibie-data-<version>.zip` only as
    a fallback through an approved internal channel.
 
