@@ -3,11 +3,7 @@
     "vibie-data": {
       "type": "http",
       "url": "https://mcp.vibie.live/mcp",
-      "auth": "oauth",
-      "scopes": [
-        "vibie.data.read",
-        "offline_access"
-      ]
+      "oauth_resource": "https://mcp.vibie.live/mcp"
     }
   }
 }
