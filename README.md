@@ -43,7 +43,7 @@ GitHub is the canonical public marketplace host for both Claude and Codex. Add t
 
 ```text
 /plugin marketplace add https://github.com/donuts-bkk/ai-tools.git
-/plugin install vibie-data@ai-tools
+/plugin install vibie-data@donuts-bkk-ai-tools
 /reload-plugins
 ```
 
@@ -57,7 +57,7 @@ Claude Code uses its own marketplace manifest from the same Git repository. Run 
 
 ```text
 /plugin marketplace add https://github.com/donuts-bkk/ai-tools.git
-/plugin install vibie-data@ai-tools
+/plugin install vibie-data@donuts-bkk-ai-tools
 /reload-plugins
 ```
 
@@ -67,18 +67,22 @@ The equivalent terminal commands are:
 
 ```bash
 claude plugin marketplace add https://github.com/donuts-bkk/ai-tools.git
-claude plugin install vibie-data@ai-tools
+claude plugin install vibie-data@donuts-bkk-ai-tools
 ```
 
 ### Update in Claude Code
 
 ```text
-/plugin marketplace update ai-tools
-/plugin update vibie-data@ai-tools
+/plugin marketplace update donuts-bkk-ai-tools
+/plugin update vibie-data@donuts-bkk-ai-tools
 /reload-plugins
 ```
 
 Claude Code uses the semantic version in `.claude-plugin/plugin.json`. Maintainers must bump it for every Claude-facing release.
+
+The Claude marketplace's technical identifier is `donuts-bkk-ai-tools`. It is intentionally
+different from the legacy `ai-tools` identifier so accounts with the retired GitLab marketplace
+can add the canonical GitHub marketplace without a server-side name collision.
 
 ## Use in Claude or Claude Desktop
 
