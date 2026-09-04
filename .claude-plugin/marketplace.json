@@ -10,7 +10,7 @@
     {
       "name": "vibie-data",
       "displayName": "Vibie Data",
-      "source": "./plugins/vibie-data",
+      "source": "./plugins/vibie-data-claude",
       "description": "Query verified, read-only Vibie production data through an OAuth-protected MCP server.",
       "category": "Productivity",
       "tags": [

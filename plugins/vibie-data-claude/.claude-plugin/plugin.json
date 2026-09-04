@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "vibie-data",
   "displayName": "Vibie Data",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Query and explain verified, read-only Vibie production data.",
   "author": {
     "name": "Donuts Bangkok Co., Ltd.",
@@ -16,6 +16,6 @@
     "business-intelligence",
     "mcp"
   ],
-  "mcpServers": "./.claude-mcp.json",
+  "mcpServers": "./.mcp.json",
   "defaultEnabled": true
 }

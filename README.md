@@ -126,7 +126,8 @@ codex plugin marketplace list
 
 ## Maintainer workflow
 
-1. Update the shared skill or client manifests under `plugins/vibie-data`.
+1. Update the Codex package under `plugins/vibie-data` and the Claude package under
+   `plugins/vibie-data-claude`. Keep their skill instructions aligned.
 2. Bump the Codex cachebuster and the Claude semantic version in their respective `plugin.json` files.
 3. Validate and test both the Codex and Claude packages locally.
 4. Build the Claude upload fallback with `./scripts/build-claude-upload.sh`.
@@ -134,6 +135,10 @@ codex plugin marketplace list
    `dist/` archives.
 6. Team members update through the marketplace. Distribute `dist/vibie-data-<version>.zip` only as
    a fallback through an approved internal channel.
+
+Codex and Claude use separate package directories because their MCP OAuth configuration schemas
+differ. Do not put both client MCP files in one plugin directory: Claude's remote marketplace
+validator rejects conflicting declarations for the same MCP server name.
 
 The archive must keep `.claude-plugin/plugin.json` at the ZIP root and remain below Anthropic's
 50 MB upload limit. The build script validates both conditions.
