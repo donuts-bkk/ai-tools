@@ -1,14 +1,35 @@
-# Vibie Data Plugin
+# Donuts Bangkok AI Tools
 
-Public Codex and Claude Code marketplace for authorized Donuts Bangkok team members. One marketplace
-can contain multiple project plugins; it currently bundles Vibie Data with the OAuth-protected,
-read-only MCP server at `https://mcp.vibie.live/mcp`.
+Public Git marketplace for AI tools maintained by Donuts Bangkok. One marketplace can distribute
+multiple project-specific plugins while each project's data, credentials, OAuth policy, and server
+remain isolated.
 
-The repository is only a distribution package for AI clients. It contains no database credential, native binary, PostgreSQL client, or backend source code. Making this repository public does not make Vibie data public: the MCP server still requires Auth0 login with an authorized company account and the `vibie.data.read` scope.
+The first package is **Vibie Data**, backed by the OAuth-protected, read-only MCP endpoint at
+`https://mcp.vibie.live/mcp`. This repository contains only client manifests, MCP endpoint metadata,
+and business-language skills. It contains no database credentials, native binary, private backend
+source, Auth0 client secret, or operational secret.
+
+The reusable MCP server core and private operations documents live in the private repository
+`github.com/donuts-bkk/data-mcp`.
+
+## Current client status
+
+| Client | Recommended path | Status |
+| --- | --- | --- |
+| Codex | Add this Git marketplace and install the project plugin | Package and marketplace are available; verify OAuth and tool invocation after every release |
+| Claude Code | Add this Git marketplace and install `vibie-data@ai-tools` | Package is available; record a fresh end-to-end result before announcing a release |
+| Claude Desktop | Add `https://mcp.vibie.live/mcp` as a custom connector | Tested successfully |
+| ChatGPT Desktop | Repository-installed plugin | **Pending:** team installation can complete Google sign-in but the MCP tools may not become available in a new chat |
+| ChatGPT web | Bundled `.mcp.json` | Not supported by this distribution path |
+
+Do not claim ChatGPT team support until the pending connector-loading issue is resolved and tested
+on a second account. The previous `.app.json` experiment depended on an account-scoped Development
+app and caused other users to see **Couldn't load connector**; it was removed. Do not restore it
+unless the app has a shared publication/access model that all intended users can use.
 
 ## Install in Codex
 
-Each team member adds the public marketplace once. Run this command in macOS Terminal or Windows PowerShell:
+Each team member adds the public marketplace once. Run in macOS Terminal or Windows PowerShell:
 
 ```bash
 codex plugin marketplace add https://github.com/donuts-bkk/ai-tools.git
@@ -17,43 +38,28 @@ codex plugin marketplace add https://github.com/donuts-bkk/ai-tools.git
 No GitHub account or SSH key is required. Then:
 
 1. Restart Codex.
-2. Open **Settings → Plugins**.
-3. Choose **Vibie Team → Vibie Data** and click **Install**.
-4. Complete the Auth0 login with an authorized, verified `@donuts-bkk.com` Google Workspace account.
+2. Open **Settings -> Plugins**.
+3. Choose **Vibie Team -> Vibie Data** and click **Install**.
+4. Complete Auth0 login with an authorized, verified `@donuts-bkk.com` Google Workspace account.
 5. Start a new task and ask a Vibie business-data question.
 
-Codex reads `.mcp.json` from the plugin and requests `vibie.data.read` and
-`offline_access`. The MCP OAuth broker handles Auth0's OpenID scopes internally, so each
-installation does not create a new Auth0 Application. A ChatGPT connector, ChatGPT
-developer-mode app, ChatGPT Business workspace, and OpenAI plugin-directory review are not
-part of this installation path.
+The Codex package uses `plugins/vibie-data/.mcp.json` with the hosted MCP URL and
+`oauth_resource`. The MCP broker performs DCR/PKCE and delegates company login to the central Auth0
+application; installing the plugin does not create a new Auth0 Application.
 
-For a CLI smoke test:
+CLI smoke test:
 
 ```bash
 codex plugin add vibie-data@personal
+codex mcp logout vibie-data
 codex mcp login vibie-data --oauth-client-registration dcr
 ```
 
-`personal` is the marketplace's technical identifier; its display name in the GUI is **Vibie Team**.
+`personal` is the current technical marketplace identifier; the GUI display name is **Vibie Team**.
 
-## Install in Claude from GitHub (recommended)
+## Install in Claude Code
 
-GitHub is the canonical public marketplace host for both Claude and Codex. Add this marketplace once:
-
-```text
-/plugin marketplace add https://github.com/donuts-bkk/ai-tools.git
-/plugin install vibie-data@ai-tools
-/reload-plugins
-```
-
-Then run `/mcp`, select Vibie Data, and authenticate with an authorized, verified
-`@donuts-bkk.com` Google Workspace account. Future releases are distributed only through GitHub
-marketplace update/install flows.
-
-## Install in Claude Code from Git (terminal alternative)
-
-Claude Code uses its own marketplace manifest from the same Git repository. Run these commands in Claude Code:
+Inside Claude Code:
 
 ```text
 /plugin marketplace add https://github.com/donuts-bkk/ai-tools.git
@@ -61,8 +67,7 @@ Claude Code uses its own marketplace manifest from the same Git repository. Run 
 /reload-plugins
 ```
 
-Then run `/mcp`, select the Vibie Data server, and complete the OAuth login with an authorized, verified `@donuts-bkk.com` Google Workspace account. The plugin loads the same business-language skill as Codex and requests only `vibie.data.read` and refresh-token access.
-
+Then run `/mcp`, select Vibie Data, and authenticate with an authorized, verified company account.
 The equivalent terminal commands are:
 
 ```bash
@@ -70,7 +75,7 @@ claude plugin marketplace add https://github.com/donuts-bkk/ai-tools.git
 claude plugin install vibie-data@ai-tools
 ```
 
-### Update in Claude Code
+Update an existing installation with:
 
 ```text
 /plugin marketplace update ai-tools
@@ -78,58 +83,77 @@ claude plugin install vibie-data@ai-tools
 /reload-plugins
 ```
 
-Claude Code uses the semantic version in `.claude-plugin/plugin.json`. Maintainers must bump it for every Claude-facing release.
+Claude Code uses the semantic version in `plugins/vibie-data-claude/.claude-plugin/plugin.json`.
+Maintainers must bump it for every Claude-facing package change.
 
-## Use in Claude or Claude Desktop
+## Use in Claude Desktop
 
-Claude and Claude Desktop can use the hosted MCP server directly without installing the Git marketplace:
+Claude Desktop can connect directly without installing the Git marketplace:
 
-1. Open **Settings → Connectors**.
-2. Choose **Add custom connector**.
-3. Enter `Vibie Data` as the name and `https://mcp.vibie.live/mcp` as the connector URL.
-4. Click **Connect** and complete the company Auth0 login.
-5. Enable the Vibie Data tools from **Search and tools** in a conversation.
+1. Open **Settings -> Connectors -> Add custom connector**.
+2. Enter `Vibie Data` and `https://mcp.vibie.live/mcp`.
+3. Choose **Always required** for Authentication.
+4. Choose **Use your own OAuth client** and enter the centrally managed client details supplied by
+   the system owner according to the private Auth0 runbook.
+5. Connect, finish company Google sign-in, and enable the Vibie Data tools in a new conversation.
 
-The Git plugin's skill instructions are available in Claude Code. Claude and Claude Desktop receive the MCP tools, their safety descriptions, and live business context from the server itself.
+The current tested Claude Desktop path uses the managed client. Broker DCR remains stateless and
+does not create Auth0 Applications; Auth0 tenant DCR remains disabled. The authoritative client
+details and secret-handling procedure are private and must not be copied into this public repository.
 
 ## Update an existing Codex installation
-
-Refresh the Git-backed marketplace:
 
 ```bash
 codex plugin marketplace upgrade personal
 ```
 
-Then restart Codex, open **Settings → Plugins → Vibie Team → Vibie Data**, and use the GUI update action if shown. Start a new task after updating so Codex loads the new skill and MCP configuration.
-
-To verify the configured marketplace source:
+Restart Codex, open **Settings -> Plugins -> Vibie Team -> Vibie Data**, use the update action if
+shown, and start a new task. Verify the configured source with:
 
 ```bash
 codex plugin marketplace list
 ```
 
+## Add another project
+
+Use one marketplace entry per project so users install only the tools they are authorized to use.
+For a new project `<slug>`:
+
+1. In the private `data-mcp` repository, create and review `profiles/<slug>.json` from the real
+   schema and business definitions.
+2. Deploy a separate MCP instance with its own hostname, read-only DB role, database secret, OAuth
+   resource/scope, broker secret, logs, and health checks.
+3. Add `plugins/<slug>-data` for Codex and `plugins/<slug>-data-claude` for Claude.
+4. Add entries to `.agents/plugins/marketplace.json` and `.claude-plugin/marketplace.json`.
+5. Keep both skills semantically aligned, but keep their client-specific MCP manifests separate.
+6. Validate the packages and complete OAuth plus real-tool end-to-end tests before publishing.
+
+Never point two projects at the same DB identity or copy private schemas, runbooks, credentials, or
+secrets into this public repository. Full project onboarding and the AI-agent handoff prompt are in
+`docs/NEW-PROJECT.md` in the private `data-mcp` repository.
+
 ## Maintainer workflow
 
-1. Update the Codex package under `plugins/vibie-data` and the Claude package under
-   `plugins/vibie-data-claude`. Keep their skill instructions aligned.
-2. Bump the Codex cachebuster and the Claude semantic version in their respective `plugin.json` files.
-3. Validate and test both the Codex and Claude packages locally.
-4. Commit and push source changes to the public GitHub repository.
-5. Team members install and update only through the Git marketplace.
+1. Change the private MCP core/profile first when server behavior or business definitions change.
+2. Update the matching Codex and Claude packages and keep their skill instructions aligned.
+3. Bump the Codex cachebuster/version for Codex-facing package changes and the Claude semantic
+   version for Claude-facing changes. Documentation-only changes do not require a package bump.
+4. Validate both package directories and both marketplace manifests.
+5. Commit and push to `https://github.com/donuts-bkk/ai-tools`.
+6. Test with a fresh client/account before announcing team availability.
 
-Codex and Claude use separate package directories because their MCP OAuth configuration schemas
-differ. Do not put both client MCP files in one plugin directory: Claude's remote marketplace
-validator rejects conflicting declarations for the same MCP server name.
-
-These Git marketplaces are separate from the OpenAI and Anthropic public directories. Publishing a new Git revision for direct team installation does not require submitting the plugin to either company for review.
-
-## Authentication operations
-
-The production Auth0 configuration, change procedure, incident response, and rollback checklist are maintained privately in the MCP server repository at `docs/AUTH0-RUNBOOK.md`. Do not copy Auth0 credentials, tokens, database URLs, or operational secrets into this public repository.
+Codex and Claude use separate package directories because their remote MCP OAuth manifest schemas
+differ. These Git marketplaces are separate from the OpenAI and Anthropic public directories; the
+direct Git distribution workflow does not itself require directory review.
 
 ## Security boundary
 
-- The public repository contains only Codex/Claude plugin metadata, MCP endpoint configuration, and business-language guidance.
-- MCP access requires OAuth, an authorized verified company identity, and the `vibie.data.read` scope.
-- The MCP server independently enforces read-only SQL, bounded results, Bangkok timezone handling, and PII restrictions.
-- Database credentials remain only on the server and are never installed on employee machines.
+- Public: plugin manifests, MCP URLs, non-secret scopes, and business-language guidance.
+- Private: MCP implementation, database/schema details, Auth0 operations, deployment configuration,
+  audit procedures, and all secrets.
+- Runtime: OAuth verifies the company identity; the MCP server independently enforces read-only SQL,
+  bounded results, project timezone, sensitive-field restrictions, and audit logging.
+- Client machines never receive a database credential.
+
+The production Auth0 inventory, change procedure, incident response, and rollback checklist are
+maintained privately in `github.com/donuts-bkk/data-mcp/docs/AUTH0-RUNBOOK.md`.
