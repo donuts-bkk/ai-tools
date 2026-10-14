@@ -1,7 +1,7 @@
 {
-  "name": "personal",
+  "name": "ai-tools",
   "interface": {
-    "displayName": "Vibie Team"
+    "displayName": "Donuts Bangkok AI Tools"
   },
   "plugins": [
     {

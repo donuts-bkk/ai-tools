@@ -39,7 +39,7 @@ No GitHub account or SSH key is required. Then:
 
 1. Restart Codex.
 2. Open **Settings -> Plugins**.
-3. Choose **Vibie Team -> Vibie Data** and click **Install**.
+3. Choose **Donuts Bangkok AI Tools -> Vibie Data** and click **Install**.
 4. Complete Auth0 login with an authorized, verified `@donuts-bkk.com` Google Workspace account.
 5. Start a new task and ask a Vibie business-data question.
 
@@ -50,12 +50,13 @@ application; installing the plugin does not create a new Auth0 Application.
 CLI smoke test:
 
 ```bash
-codex plugin add vibie-data@personal
+codex plugin add vibie-data@ai-tools
 codex mcp logout vibie-data
 codex mcp login vibie-data --oauth-client-registration dcr
 ```
 
-`personal` is the current technical marketplace identifier; the GUI display name is **Vibie Team**.
+The Codex marketplace identifier is `ai-tools`, the same as the Claude Code marketplace; the GUI
+display name is **Donuts Bangkok AI Tools**.
 
 ## Install in Claude Code
 
@@ -152,12 +153,29 @@ Keep this plugin free of secrets and project-specific data; it is published in a
 
 ## Update an existing Codex installation
 
+### Migrating from the old `personal` marketplace
+
+Installations made before the marketplace was renamed are registered as `personal` (display name
+**Vibie Team**). Remove that registration once, add the marketplace again, and reinstall Vibie Data:
+
 ```bash
-codex plugin marketplace upgrade personal
+codex plugin marketplace remove personal
+codex plugin marketplace add https://github.com/donuts-bkk/ai-tools.git
+codex plugin add vibie-data@ai-tools
 ```
 
-Restart Codex, open **Settings -> Plugins -> Vibie Team -> Vibie Data**, use the update action if
-shown, and start a new task. Verify the configured source with:
+Restart Codex and sign in again when prompted. Skip this if `codex plugin marketplace list` already
+shows `ai-tools`. If you also keep your own plugins in `~/.agents/plugins/marketplace.json`, check
+that the `personal` entry you remove is this repository and not that file.
+
+### Regular updates
+
+```bash
+codex plugin marketplace upgrade ai-tools
+```
+
+Restart Codex, open **Settings -> Plugins -> Donuts Bangkok AI Tools -> Vibie Data**, use the update
+action if shown, and start a new task. Verify the configured source with:
 
 ```bash
 codex plugin marketplace list
