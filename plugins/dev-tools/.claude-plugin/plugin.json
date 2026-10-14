@@ -1,17 +1,17 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
-  "name": "review-loop",
-  "displayName": "Review Loop",
+  "name": "dev-tools",
+  "displayName": "Dev Tools",
   "version": "0.1.0",
-  "description": "Review the uncommitted change with an independent read-only reviewer, fix Critical and High findings, and re-review until clean.",
+  "description": "Shared engineering skills and subagents for the Donuts Bangkok team. Install once to get every current and future dev skill.",
   "author": {
     "name": "Donuts Bangkok Co., Ltd.",
     "url": "https://vibie.live"
   },
   "repository": "https://github.com/donuts-bkk/ai-tools",
   "keywords": [
+    "engineering",
     "code-review",
-    "subagent",
     "workflow"
   ]
 }

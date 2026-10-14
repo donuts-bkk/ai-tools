@@ -4,7 +4,7 @@ Public Git marketplace for AI tools maintained by Donuts Bangkok. One marketplac
 multiple project-specific plugins while each project's data, credentials, OAuth policy, and server
 remain isolated.
 
-The marketplace currently offers **Vibie Data** and **Review Loop** (see below). Vibie Data is backed by the OAuth-protected, read-only MCP endpoint at
+The marketplace currently offers **Vibie Data** and **Dev Tools** (see below). Vibie Data is backed by the OAuth-protected, read-only MCP endpoint at
 `https://mcp.vibie.live/mcp`. This repository contains only client manifests, MCP endpoint metadata,
 and business-language skills. It contains no database credentials, native binary, private backend
 source, Auth0 client secret, or operational secret.
@@ -101,26 +101,34 @@ The current tested Claude Desktop path uses the managed client. Broker DCR remai
 does not create Auth0 Applications; Auth0 tenant DCR remains disabled. The authoritative client
 details and secret-handling procedure are private and must not be copied into this public repository.
 
-## Review Loop (Claude Code only)
+## Dev Tools (Claude Code only)
 
-`review-loop` packages the `review-until-clean` skill and its read-only `diff-reviewer` subagent.
-It reviews the current uncommitted change, fixes Critical and High findings, and re-reviews with the
-same subagent until the verdict is PASS or five reviews have run. Progress and reports are in Thai.
+`dev-tools` is the shared plugin for engineering skills and subagents. Engineers install it once;
+new skills added to it arrive with `/plugin update`, with no new install.
 
 ```text
 /plugin marketplace add https://github.com/donuts-bkk/ai-tools.git
-/plugin install review-loop@ai-tools
+/plugin install dev-tools@ai-tools
 /reload-plugins
 ```
 
-Run it from the repository you will commit from, with the change still uncommitted:
+Update to get new or changed skills:
 
 ```text
-/review-loop:review-until-clean
+/plugin marketplace update ai-tools
+/plugin update dev-tools@ai-tools
+/reload-plugins
 ```
 
-Notes:
+### Skills
 
+| Command | What it does |
+| --- | --- |
+| `/dev-tools:review-until-clean` | Reviews the current uncommitted change with the read-only `diff-reviewer` subagent, fixes Critical and High findings, and re-reviews until PASS or five reviews. Progress and reports are in Thai. |
+
+`review-until-clean` notes:
+
+- Run it from the repository you will commit from, with the change still uncommitted.
 - The skill only runs when typed; Claude never starts it on its own.
 - The subagent uses the `opus` alias (latest Opus available to the account) at high effort, so the
   account must have Opus access. Set `ANTHROPIC_DEFAULT_OPUS_MODEL` to pin a specific version.
@@ -128,6 +136,19 @@ Notes:
   falls back to its built-in review checklist.
 - If you already have a personal copy in `~/.claude/skills` and `~/.claude/agents`, remove it to
   avoid two versions drifting apart.
+
+### Add a skill to Dev Tools
+
+1. Add `plugins/dev-tools/skills/<skill-name>/SKILL.md`, plus any subagent it needs in
+   `plugins/dev-tools/agents/<agent-name>.md`.
+2. Refer to bundled subagents by their namespaced name, `dev-tools:<agent-name>`.
+3. Add a row to the Skills table above.
+4. Bump `version` in `plugins/dev-tools/.claude-plugin/plugin.json`; Claude Code only offers
+   updates when the version changes.
+5. Run `claude plugin validate plugins/dev-tools` and `claude plugin validate .`, then test the
+   skill from a fresh install before announcing it.
+
+Keep this plugin free of secrets and project-specific data; it is published in a public repository.
 
 ## Update an existing Codex installation
 

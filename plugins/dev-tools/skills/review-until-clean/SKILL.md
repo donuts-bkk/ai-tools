@@ -31,7 +31,7 @@ another review round.
      and stop.
 1. Set `max_reviews = 5`, `review = 1`. Keep a ledger of every finding ID
    and its status across rounds.
-2. Spawn the reviewer: Agent tool, `subagent_type: review-loop:diff-reviewer`,
+2. Spawn the reviewer: Agent tool, `subagent_type: dev-tools:diff-reviewer`,
    `run_in_background: false`, prompt:
    "Review the current uncommitted change, tracked and untracked files.
    Use your strict output format and end with the VERDICT line."
