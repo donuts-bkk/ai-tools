@@ -4,7 +4,7 @@ Public Git marketplace for AI tools maintained by Donuts Bangkok. One marketplac
 multiple project-specific plugins while each project's data, credentials, OAuth policy, and server
 remain isolated.
 
-The first package is **Vibie Data**, backed by the OAuth-protected, read-only MCP endpoint at
+The marketplace currently offers **Vibie Data** and **Review Loop** (see below). Vibie Data is backed by the OAuth-protected, read-only MCP endpoint at
 `https://mcp.vibie.live/mcp`. This repository contains only client manifests, MCP endpoint metadata,
 and business-language skills. It contains no database credentials, native binary, private backend
 source, Auth0 client secret, or operational secret.
@@ -100,6 +100,34 @@ Claude Desktop can connect directly without installing the Git marketplace:
 The current tested Claude Desktop path uses the managed client. Broker DCR remains stateless and
 does not create Auth0 Applications; Auth0 tenant DCR remains disabled. The authoritative client
 details and secret-handling procedure are private and must not be copied into this public repository.
+
+## Review Loop (Claude Code only)
+
+`review-loop` packages the `review-until-clean` skill and its read-only `diff-reviewer` subagent.
+It reviews the current uncommitted change, fixes Critical and High findings, and re-reviews with the
+same subagent until the verdict is PASS or five reviews have run. Progress and reports are in Thai.
+
+```text
+/plugin marketplace add https://github.com/donuts-bkk/ai-tools.git
+/plugin install review-loop@ai-tools
+/reload-plugins
+```
+
+Run it from the repository you will commit from, with the change still uncommitted:
+
+```text
+/review-loop:review-until-clean
+```
+
+Notes:
+
+- The skill only runs when typed; Claude never starts it on its own.
+- The subagent uses the `opus` alias (latest Opus available to the account) at high effort, so the
+  account must have Opus access. Set `ANTHROPIC_DEFAULT_OPUS_MODEL` to pin a specific version.
+- It uses `/engineering:code-review` when the `engineering` plugin is enabled and otherwise
+  falls back to its built-in review checklist.
+- If you already have a personal copy in `~/.claude/skills` and `~/.claude/agents`, remove it to
+  avoid two versions drifting apart.
 
 ## Update an existing Codex installation
 
